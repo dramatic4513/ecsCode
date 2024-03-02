@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="112d50f9-02b7-4b36-8a81-8209e9be70fb" name="gtm">
+        <fileTransfer accessType="SFTP" host="121.199.39.152" port="22" sshConfigId="0e586ba4-d6fb-4652-a7ee-745e4da43ac7" sshConfig="postgres@121.199.39.152:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
