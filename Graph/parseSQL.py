@@ -36,6 +36,7 @@ def folder_sql_to_columns():
     return columns
 
 
+#生成表和属性特征对应的字典
 def table_columns_dict():
     file_path = '/home/postgres/tpc/tpch/SQL/createTable.txt'
     string = ""
@@ -57,6 +58,8 @@ def table_columns_dict():
         print(key)
         tc_dict[key] = vale
         print(tc_dict)
+    # table_columns_dict = {'N_': 'NATION', 'R_': 'REGION', 'P_': 'PART', 'S_': 'SUPPLIER', 'PS_': 'PARTSUPP',
+    #                       'C_': 'CUSTOMER', 'O_': 'ORDERS', 'L_': 'LINEITEM'}
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ from datetime import datetime
 
 host = "172.23.52.199"
 port = 20004
-database = "tpch"
+database = "tpch100m"
 user = "postgres"
 password = "postgres"
 
@@ -20,6 +20,7 @@ def run_query():
             #     continue
             if filename not in ['db1.sql', 'db2.sql', 'db3.sql', 'db4.sql', 'db5.sql']:
                 continue
+            print(filename)
             query_path = os.path.join(root_path, filename)
             sql = ""
             with open(query_path) as f:
@@ -42,14 +43,15 @@ def run_query():
 
 
 if __name__ == '__main__':
-    run_time = []
-    number = 5;
-    for i in range(number):
-        run_time.append(run_query())
-    sum = 0
-    for i in run_time:
-        print(i)
-        sum += i
-    average = sum / number
-    print("average time" + str(average))
+    run_query()
+    # run_time = []
+    # number = 5;
+    # for i in range(number):
+    #     run_time.append(run_query())
+    # sum = 0
+    # for i in run_time:
+    #     print(i)
+    #     sum += i
+    # average = sum / number
+    # print("average time" + str(average))
 
