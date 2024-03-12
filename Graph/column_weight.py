@@ -14,6 +14,8 @@
 和原来的主键进行对比，显示出需要更改的分区键，并且生成SQL语句
 '''
 
+#ALTER TABLE SUPPLIER DISTRIBUTE BY HASH(s_nationkey);
+
 import parseSQL
 
 table_columns_dict = {'n_': 'NATION', 'r_': 'REGION', 'p_': 'PART', 's_': 'SUPPLIER', 'ps_': 'PARTSUPP',
@@ -46,7 +48,10 @@ def find_column_as_partition_key(join_pairs):
     # 将属性按照权重值大小进行排序，找到最大的权重值作为对应表的分区键
     sorted_keys = sorted(column_weight_dict, key=column_weight_dict.get, reverse=True)
     partition_key = sorted_keys[0]
-    print(table_columns_dict[partition_key.split('_')[0] + "_"], partition_key)
+    table_name = table_columns_dict[partition_key.split('_')[0] + "_"]
+    sql_str = "ALTER TABLE " + table_name + " DISTRIBUTE BY HASH("+partition_key+");"
+    # print(table_name, partition_key)
+    print(sql_str)
     table_partition_key_dict = {table_columns_dict[partition_key.split('_')[0] + "_"]: partition_key}
     connection_table_column_pre = []
     connection_table_column_pre.append(partition_key.split('_')[0] + "_")
@@ -61,7 +66,9 @@ def find_column_as_partition_key(join_pairs):
             if table not in table_partition_key_dict:
                 # print("\n\n!!! Waring : " + str(table) + " is already partition key " + partition_key + "\n\n")
                 table_partition_key_dict[table] = value
-                print(table + " " + value)
+                sql_str = "ALTER TABLE " + table + " DISTRIBUTE BY HASH(" + value + ");"
+                # print(table + " " + value)
+                print(sql_str)
         elif join_pair[1] == partition_key:
             key = join_pair[0].split("_")[0] + "_"
             connection_table_column_pre.append(key)
@@ -70,7 +77,9 @@ def find_column_as_partition_key(join_pairs):
             if table not in table_partition_key_dict:
                 # print("\n\n!!! Waring : " + str(table) + " is already partition key " + partition_key + "\n\n")
                 table_partition_key_dict[table] = value
-                print(table + " " + value)
+                sql_str = "ALTER TABLE " + table + " DISTRIBUTE BY HASH(" + value + ");"
+                # print(table + " " + value)
+                print(sql_str)
         else:
             join_pairs_new.append(join_pair)
     # 只是去掉上述连接还不够，还需要去除参与连接的表的其他所有连接
@@ -90,4 +99,5 @@ if __name__ == '__main__':
     table_partiton_key_dict = {}
     while join_pairs_list.__len__() > 0:
         res_dict, join_pairs_list = find_column_as_partition_key(join_pairs_list)
+
 

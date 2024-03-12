@@ -19,6 +19,7 @@ def parse_sql(filename):
     columns = []
     for match in matches:
         key, value = match
+        # if not key.isdigit() and not value.isdigit() and key.find('_') == 1 and value.find('_') == 1:
         if not key.isdigit() and not value.isdigit():
             columns.append(match)
     return columns
@@ -29,7 +30,9 @@ def folder_sql_to_columns():
     root_path = '/home/postgres/tpc/tpch/SQL/queries'
     columns = []
     for filename in os.listdir(root_path):
-        if filename not in ['db1.sql', 'db2.sql', 'db3.sql', 'db4.sql', 'db5.sql']:
+        # if filename not in ['db21.sql', 'db22.sql']:
+        #     continue
+        if filename in ['db20.sql']:
             continue
         query_path = os.path.join(root_path, filename)
         columns += parse_sql(query_path)  # 获得当前sql的连接属性
@@ -61,13 +64,25 @@ def table_columns_dict():
     # table_columns_dict = {'N_': 'NATION', 'R_': 'REGION', 'P_': 'PART', 'S_': 'SUPPLIER', 'PS_': 'PARTSUPP',
     #                       'C_': 'CUSTOMER', 'O_': 'ORDERS', 'L_': 'LINEITEM'}
 
+def tpcds_table_size():
+    file_path = '/home/postgres/code/data/tcpds_table_name.txt'
+    with open(file_path) as f:
+        for line in f:
+            table = line.strip().split(".")[0]
+            # sql_string = "pg_size_pretty(pg_total_relation_size(\'" + table + '\')) AS \"'table + '\",'
+            sql = "pg_size_pretty(pg_total_relation_size('{0}')) AS \"{0}\"".format(table)
+            print(sql + ',')
 
 if __name__ == '__main__':
-    columns = folder_sql_to_columns()
-    for column in columns:
-        print(column)
+    tpcds_table_size()
+    # columns = folder_sql_to_columns()
+    # for column in columns:
+    #     print(column)
     # table_columns_dict = {'N_': 'NATION', 'R_': 'REGION', 'P_': 'PART', 'S_': 'SUPPLIER', 'PS_': 'PARTSUPP',
     #                       'C_': 'CUSTOMER', 'O_': 'ORDERS', 'L_': 'LINEITEM'}
+
+
+
 
 """
 查询数据库中的表名，并且返回结果的属性为表名
@@ -81,3 +96,57 @@ if __name__ == '__main__':
         pg_size_pretty(pg_total_relation_size('ORDERS')) AS "ORDERS",
         pg_size_pretty(pg_total_relation_size('LINEITEM')) AS "LINEITEM";
 """
+
+'''
+SELECT 
+pg_size_pretty(pg_total_relation_size('call_center')) AS "call_center",
+pg_size_pretty(pg_total_relation_size('catalog_page')) AS "catalog_page",
+pg_size_pretty(pg_total_relation_size('catalog_returns')) AS "catalog_returns",
+pg_size_pretty(pg_total_relation_size('catalog_sales')) AS "catalog_sales",
+pg_size_pretty(pg_total_relation_size('customer_address')) AS "customer_address",
+pg_size_pretty(pg_total_relation_size('customer')) AS "customer",
+pg_size_pretty(pg_total_relation_size('customer_demographics')) AS "customer_demographics",
+pg_size_pretty(pg_total_relation_size('date_dim')) AS "date_dim",
+pg_size_pretty(pg_total_relation_size('dbgen_version')) AS "dbgen_version",
+pg_size_pretty(pg_total_relation_size('household_demographics')) AS "household_demographics",
+pg_size_pretty(pg_total_relation_size('income_band')) AS "income_band",
+pg_size_pretty(pg_total_relation_size('inventory')) AS "inventory",
+pg_size_pretty(pg_total_relation_size('item')) AS "item",
+pg_size_pretty(pg_total_relation_size('promotion')) AS "promotion",
+pg_size_pretty(pg_total_relation_size('reason')) AS "reason",
+pg_size_pretty(pg_total_relation_size('ship_mode')) AS "ship_mode",
+pg_size_pretty(pg_total_relation_size('store')) AS "store",
+pg_size_pretty(pg_total_relation_size('store_returns')) AS "store_returns",
+pg_size_pretty(pg_total_relation_size('store_sales')) AS "store_sales",
+pg_size_pretty(pg_total_relation_size('time_dim')) AS "time_dim",
+pg_size_pretty(pg_total_relation_size('warehouse')) AS "warehouse",
+pg_size_pretty(pg_total_relation_size('web_page')) AS "web_page",
+pg_size_pretty(pg_total_relation_size('web_returns')) AS "web_returns",
+pg_size_pretty(pg_total_relation_size('web_sales')) AS "web_sales",
+pg_size_pretty(pg_total_relation_size('web_site')) AS "web_site";SELECT 
+pg_size_pretty(pg_total_relation_size('call_center')) AS "call_center",
+pg_size_pretty(pg_total_relation_size('catalog_page')) AS "catalog_page",
+pg_size_pretty(pg_total_relation_size('catalog_returns')) AS "catalog_returns",
+pg_size_pretty(pg_total_relation_size('catalog_sales')) AS "catalog_sales",
+pg_size_pretty(pg_total_relation_size('customer_address')) AS "customer_address",
+pg_size_pretty(pg_total_relation_size('customer')) AS "customer",
+pg_size_pretty(pg_total_relation_size('customer_demographics')) AS "customer_demographics",
+pg_size_pretty(pg_total_relation_size('date_dim')) AS "date_dim",
+pg_size_pretty(pg_total_relation_size('dbgen_version')) AS "dbgen_version",
+pg_size_pretty(pg_total_relation_size('household_demographics')) AS "household_demographics",
+pg_size_pretty(pg_total_relation_size('income_band')) AS "income_band",
+pg_size_pretty(pg_total_relation_size('inventory')) AS "inventory",
+pg_size_pretty(pg_total_relation_size('item')) AS "item",
+pg_size_pretty(pg_total_relation_size('promotion')) AS "promotion",
+pg_size_pretty(pg_total_relation_size('reason')) AS "reason",
+pg_size_pretty(pg_total_relation_size('ship_mode')) AS "ship_mode",
+pg_size_pretty(pg_total_relation_size('store')) AS "store",
+pg_size_pretty(pg_total_relation_size('store_returns')) AS "store_returns",
+pg_size_pretty(pg_total_relation_size('store_sales')) AS "store_sales",
+pg_size_pretty(pg_total_relation_size('time_dim')) AS "time_dim",
+pg_size_pretty(pg_total_relation_size('warehouse')) AS "warehouse",
+pg_size_pretty(pg_total_relation_size('web_page')) AS "web_page",
+pg_size_pretty(pg_total_relation_size('web_returns')) AS "web_returns",
+pg_size_pretty(pg_total_relation_size('web_sales')) AS "web_sales",
+pg_size_pretty(pg_total_relation_size('web_site')) AS "web_site";
+'''

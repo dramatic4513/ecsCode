@@ -25,15 +25,18 @@ def run_query():
                             'query58.sql', 'query59.sql', 'query64.sql', 'query74.sql', 'query78.sql', 'query4.sql']:
                 continue
 
-            if filename in ['query18.sql', 'query28.sql', 'query91.sql', 'query17.sql', 'query81.sql', 'query38.sql',
-                            'query60.sql', 'query89.sql', 'query8.sql', 'query3.sql', 'query84.sql', 'query26.sql',
-                            'query33.sql', 'query96.sql', 'query93.sql', 'query15.sql', 'query13.sql', 'query66.sql',
-                            'query65.sql', 'query85.sql', 'query72.sql', 'query73.sql', 'query48.sql','query52.sql',
-                            'query55.sql', 'query83.sql', 'query71.sql', 'query31.sql', 'query39.sql', 'query42.sql',
-                            'query91.sql', 'query25.sql', 'query61.sql', 'query90.sql', 'query43.sql', 'query79.sql',
-                            'query30.sql', 'query99.sql', 'query67.sql', 'query56.sql', 'query97.sql', 'query46.sql',
-                            'query27.sql', 'query44.sql', 'query9.sql', 'query62.sql']:
-                continue
+            # if filename in ['query18.sql', 'query28.sql', 'query91.sql', 'query17.sql', 'query81.sql', 'query38.sql',
+            #                 'query60.sql', 'query89.sql', 'query8.sql', 'query3.sql', 'query84.sql', 'query26.sql',
+            #                 'query33.sql', 'query96.sql', 'query93.sql', 'query15.sql', 'query13.sql', 'query66.sql',
+            #                 'query65.sql', 'query85.sql', 'query72.sql', 'query73.sql', 'query48.sql','query52.sql',
+            #                 'query55.sql', 'query83.sql', 'query71.sql', 'query31.sql', 'query39.sql', 'query42.sql',
+            #                 'query91.sql', 'query25.sql', 'query61.sql', 'query90.sql', 'query43.sql', 'query79.sql',
+            #                 'query30.sql', 'query99.sql', 'query67.sql', 'query56.sql', 'query97.sql', 'query46.sql',
+            #                 'query27.sql', 'query44.sql', 'query9.sql', 'query62.sql', 'query22.sql', 'query50.sql',
+            #                 'query63.sql', 'query19.sql', 'query7.sql', 'query87.sql', 'query41.sql', 'query76.sql',
+            #                 'query53.sql', 'query69.sql', 'query54.sql', 'query45.sql', 'query88.sql', 'query34.sql',
+            #                 'query51.sql', 'query.sql75', 'query68.sql', 'query24.sql']:
+            #     continue
             # if filename not in ['db1.sql', 'db2.sql', 'db3.sql', 'db4.sql', 'db5.sql']:
             #     continue
             print(filename)
