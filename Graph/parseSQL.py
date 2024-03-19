@@ -26,14 +26,14 @@ def parse_sql(filename):
 
 
 # 根据存储sql语句文件夹的位置，然后决定哪些文件被解析，然后调用解析函数解析sql语句，得到解析后的属性列表
-def folder_sql_to_columns():
+def folder_sql_to_columns(filename_list):
     root_path = '/home/postgres/tpc/tpch/SQL/queries'
     columns = []
     for filename in os.listdir(root_path):
-        # if filename not in ['db21.sql', 'db22.sql']:
-        #     continue
-        if filename in ['db20.sql']:
+        if filename not in filename_list:
             continue
+        # if filename in ['db20.sql']:
+        #     continue
         query_path = os.path.join(root_path, filename)
         columns += parse_sql(query_path)  # 获得当前sql的连接属性
     return columns
@@ -74,10 +74,11 @@ def tpcds_table_size():
             print(sql + ',')
 
 if __name__ == '__main__':
-    tpcds_table_size()
-    # columns = folder_sql_to_columns()
-    # for column in columns:
-    #     print(column)
+    # tpcds_table_size()
+    filename_list = ['db1.sql', 'db2.sql', 'db3.sql', 'db4.sql', 'db5.sql']
+    columns = folder_sql_to_columns(filename_list)
+    for column in columns:
+        print(column)
     # table_columns_dict = {'N_': 'NATION', 'R_': 'REGION', 'P_': 'PART', 'S_': 'SUPPLIER', 'PS_': 'PARTSUPP',
     #                       'C_': 'CUSTOMER', 'O_': 'ORDERS', 'L_': 'LINEITEM'}
 

@@ -17,13 +17,13 @@ def run_query():
     with open(res_path,'a') as file:
         for filename in os.listdir(root_path):
             #列表中的sql语句无法在数据库中运行
-            if filename in ['query2.sql', 'query5.sql', 'query6.sql', 'query12.sql', 'query14.sql', 'query16.sql',
-                            'query20.sql', 'query21.sql', 'query23.sql', 'query32.sql', 'query36.sql', 'query37.sql',
-                            'query40.sql', 'query49.sql', 'query70.sql', 'query77.sql', 'query80.sql', 'query82.sql',
-                            'query86.sql', 'query92.sql', 'query94.sql', 'query95.sql', 'query98.sql', 'query1.sql',
-                            'query10.sql', 'query11.sql', 'query29.sql', 'query35.sql', 'query47.sql', 'query57.sql',
-                            'query58.sql', 'query59.sql', 'query64.sql', 'query74.sql', 'query78.sql', 'query4.sql']:
-                continue
+            # if filename in ['query2.sql', 'query5.sql', 'query6.sql', 'query12.sql', 'query14.sql', 'query16.sql',
+            #                 'query20.sql', 'query21.sql', 'query23.sql', 'query32.sql', 'query36.sql', 'query37.sql',
+            #                 'query40.sql', 'query49.sql', 'query70.sql', 'query77.sql', 'query80.sql', 'query82.sql',
+            #                 'query86.sql', 'query92.sql', 'query94.sql', 'query95.sql', 'query98.sql', 'query1.sql',
+            #                 'query10.sql', 'query11.sql', 'query29.sql', 'query35.sql', 'query47.sql', 'query57.sql',
+            #                 'query58.sql', 'query59.sql', 'query64.sql', 'query74.sql', 'query78.sql', 'query4.sql']:
+            #     continue
 
             # if filename in ['query18.sql', 'query28.sql', 'query91.sql', 'query17.sql', 'query81.sql', 'query38.sql',
             #                 'query60.sql', 'query89.sql', 'query8.sql', 'query3.sql', 'query84.sql', 'query26.sql',
@@ -35,10 +35,10 @@ def run_query():
             #                 'query27.sql', 'query44.sql', 'query9.sql', 'query62.sql', 'query22.sql', 'query50.sql',
             #                 'query63.sql', 'query19.sql', 'query7.sql', 'query87.sql', 'query41.sql', 'query76.sql',
             #                 'query53.sql', 'query69.sql', 'query54.sql', 'query45.sql', 'query88.sql', 'query34.sql',
-            #                 'query51.sql', 'query.sql75', 'query68.sql', 'query24.sql']:
+            #                 'query51.sql', 'query75.sql', 'query68.sql', 'query24.sql']:
             #     continue
-            # if filename not in ['db1.sql', 'db2.sql', 'db3.sql', 'db4.sql', 'db5.sql']:
-            #     continue
+            if filename not in ['query75.sql', 'query68.sql', 'query24.sql']:
+                continue
             print(filename)
             query_path = os.path.join(root_path, filename)
             sql = ""
