@@ -5,7 +5,7 @@ from datetime import datetime
 
 host = "172.23.52.199"
 port = 20004
-database = "tpcds"
+database = "tpcdstest"
 user = "postgres"
 password = "postgres"
 
@@ -37,7 +37,7 @@ def run_query():
             #                 'query53.sql', 'query69.sql', 'query54.sql', 'query45.sql', 'query88.sql', 'query34.sql',
             #                 'query51.sql', 'query75.sql', 'query68.sql', 'query24.sql']:
             #     continue
-            if filename not in ['query75.sql', 'query68.sql', 'query24.sql']:
+            if filename not in ['query39.sql']:
                 continue
             print(filename)
             query_path = os.path.join(root_path, filename)

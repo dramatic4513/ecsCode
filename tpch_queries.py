@@ -51,25 +51,25 @@ def run_query(database, file_name_list):
 
 if __name__ == '__main__':
     runtime_path = '/home/postgres/tpc/tpch/res/tpch_runtime'
-    file_name_list = [['db6.sql', 'db7.sql', 'db8.sql', 'db9.sql', 'db10.sql'],
-                      ['db11.sql', 'db12.sql', 'db13.sql', 'db14.sql', 'db15.sql'],
-                      ['db16.sql', 'db17.sql', 'db18.sql', 'db19.sql', 'db21.sql', 'db22.sql']]
-    database_names = ["tpch100m", "tpch100nationkey", "tpch100suppkey", "tpch100los"]
-    for database in database_names:
-        command = '/home/postgres/tpc/tpch/res/new_net_'
-        command = command + database + "_"
-        for file_name in file_name_list:
-            command_new = command + file_name[0]
-            print(command_new)
-            process = subprocess.Popen(['dstat', '-nt', '--output', command_new])
-            run_query(database, file_name)
-            process.terminate()
+    # file_name_list = [['db6.sql', 'db7.sql', 'db8.sql', 'db9.sql', 'db10.sql'],
+    #                   ['db11.sql', 'db12.sql', 'db13.sql', 'db14.sql', 'db15.sql'],
+    #                   ['db16.sql', 'db17.sql', 'db18.sql', 'db19.sql', 'db21.sql', 'db22.sql']]
+    # database_names = ["tpch100m", "tpch100nationkey", "tpch100suppkey", "tpch100los"]
+    # for database in database_names:
+    #     command = '/home/postgres/tpc/tpch/res/new_net_'
+    #     command = command + database + "_"
+    #     for file_name in file_name_list:
+    #         command_new = command + file_name[0]
+    #         print(command_new)
+    #         process = subprocess.Popen(['dstat', '-nt', '--output', command_new])
+    #         run_query(database, file_name)
+    #         process.terminate()
 
     # file_name_list = ['db1.sql', 'db2.sql', 'db3.sql', 'db4.sql', 'db5.sql']
     # file_name_list = ['db6.sql', 'db7.sql', 'db8.sql', 'db9.sql', 'db10.sql']
     # file_name_list = ['db11.sql', 'db12.sql', 'db13.sql', 'db14.sql', 'db15.sql']
-    # file_name_list = ['db16.sql', 'db17.sql', 'db18.sql', 'db19.sql', 'db21.sql', 'db22.sql']
-
+    file_name_list = ['db16.sql', 'db17.sql', 'db18.sql', 'db19.sql', 'db21.sql', 'db22.sql']
+    run_query('tpch100los', file_name_list)
 
 
     # run_time = []
