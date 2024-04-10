@@ -1,3 +1,5 @@
+import time
+
 import psycopg2
 import os
 import re
@@ -204,7 +206,11 @@ def greedy_column_partition(edge_weight_list):
 
 def gredy_edge_partition(edge_weight_list):
     partitions = []
+    # k = 1
     while edge_weight_list is not None and len(edge_weight_list) > 0:
+        # if k == 4:
+        #     break
+        # k = k + 1
         # 按照权重对边进行排序
         sorted_edge_weight = sorted(edge_weight_list, key=lambda x: x[-1], reverse=True)
         # 选出权重最大的边，分区
@@ -237,6 +243,7 @@ def gredy_edge_partition(edge_weight_list):
         column_name = i[1]
         if table_primary_dict[table_name] != column_name:
             print(table_name + " " + table_primary_dict[table_name] + " -> " + column_name)
+
 
 
 def primary_partiton():
@@ -379,34 +386,61 @@ def probability_attribute_partition(edge_weight_list):
         if table_primary_dict[key] != value:
             print(key + " " + table_primary_dict[key] + " -> " + value)
 
+
+def replication_for_PAA(table, edge_weight_list):
+    new_list = list()
+    for e in edge_weight_list:
+        a1 = e[0]
+        a2 = e[1]
+        t1 = attribute_to_table(a1)
+        t2 = attribute_to_table(a2)
+        if t1 == table or t2 == table:
+            continue
+        else:
+            new_list.append(e)
+    return new_list
+
 if __name__ == '__main__':
     # 根据列找表名 和 根据表名查找表大小
     # table_name = attribute_to_table("ws_net_paid_inc_ship_tax")
     # table_size_bytes = table_size(table_name)
 
-    # # # 边贪心算法生成分区语句
-    # file_name_list = ['query39.sql']
-    # join_pair_freduency = find_join_pair(file_name_list)
-    # edge_weight_list = edge_weight(join_pair_freduency)
-    # gredy_edge_partition(edge_weight_list)
+    # # 边贪心算法生成分区语句
+    file_name_list = ['query60.sql', 'query61.sql', 'query62.sql', 'query63.sql', 'query65.sql', 'query66.sql', 'query67.sql', 'query68.sql', 'query69.sql']
+    join_pair_freduency = find_join_pair(file_name_list)
+    edge_weight_list = edge_weight(join_pair_freduency)
+
+    start_time = time.time()
+    gredy_edge_partition(edge_weight_list)
+    end_time = time.time()
+    esp = (end_time - start_time) * 1000
+    print(esp)
 
     # 属性贪心算法生成分区语句
-    # file_name_list = ['query39.sql']
+    # file_name_list = ['query41.sql', 'query42.sql', 'query43.sql', 'query44.sql', 'query45.sql', 'query46.sql', 'query48.sql']
     # join_pair_freduency = find_join_pair(file_name_list)
     # edge_weight_list = edge_weight(join_pair_freduency)
     # greedy_column_partition(edge_weight_list)
 
     # # 边概率算法生成分区语句
-    # file_name_list = ['query39.sql']
+    # file_name_list = ['query41.sql', 'query42.sql', 'query43.sql', 'query44.sql', 'query45.sql', 'query46.sql', 'query48.sql']
     # join_pair_freduency = find_join_pair(file_name_list)
     # edge_weight_list = edge_weight(join_pair_freduency)
     # probability_edge_partition(edge_weight_list)
 
     # # 属性概率算法生成分区语句
-    file_name_list = ['query39.sql']
-    join_pair_freduency = find_join_pair(file_name_list)
-    edge_weight_list = edge_weight(join_pair_freduency)
-    probability_attribute_partition(edge_weight_list)
+    # file_name_list = ['query41.sql', 'query42.sql', 'query43.sql', 'query44.sql', 'query45.sql', 'query46.sql', 'query48.sql']
+    # join_pair_freduency = find_join_pair(file_name_list)
+    # edge_weight_list = edge_weight(join_pair_freduency)
+    # probability_attribute_partition(edge_weight_list)
+
+    # # 去掉全表复制表的属性概率算法生成分区语句
+    # file_name_list = ['query41.sql', 'query42.sql', 'query43.sql', 'query44.sql', 'query45.sql', 'query46.sql', 'query48.sql']
+    # join_pair_freduency = find_join_pair(file_name_list)
+    # t = "store"
+    # join_pair_weight = edge_weight(join_pair_freduency)
+    # edge_weight_list = replication_for_PAA(t, join_pair_weight)
+    # probability_attribute_partition(edge_weight_list)
 
     # 处理主键分区
     # primary_partiton()

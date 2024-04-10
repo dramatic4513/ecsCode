@@ -5,9 +5,40 @@ from datetime import datetime
 
 host = "172.23.52.199"
 port = 20004
-database = "tpcdstest"
+database = "tpcdsppp"
 user = "postgres"
 password = "postgres"
+
+def sort_queries():
+    queries = ['query18.sql', 'query28.sql', 'query91.sql', 'query17.sql', 'query81.sql', 'query38.sql',
+               'query60.sql', 'query89.sql', 'query8.sql', 'query3.sql', 'query84.sql', 'query26.sql',
+               'query33.sql', 'query96.sql', 'query93.sql', 'query15.sql', 'query13.sql', 'query66.sql',
+               'query65.sql', 'query85.sql', 'query72.sql', 'query73.sql', 'query48.sql', 'query52.sql',
+               'query55.sql', 'query83.sql', 'query71.sql', 'query31.sql', 'query39.sql', 'query42.sql',
+               'query91.sql', 'query25.sql', 'query61.sql', 'query90.sql', 'query43.sql', 'query79.sql',
+               'query30.sql', 'query99.sql', 'query67.sql', 'query56.sql', 'query97.sql', 'query46.sql',
+               'query27.sql', 'query44.sql', 'query9.sql', 'query62.sql', 'query22.sql', 'query50.sql',
+               'query63.sql', 'query19.sql', 'query7.sql', 'query87.sql', 'query41.sql', 'query76.sql',
+               'query53.sql', 'query69.sql', 'query54.sql', 'query45.sql', 'query88.sql', 'query34.sql',
+               'query51.sql', 'query75.sql', 'query68.sql', 'query24.sql']
+
+    # 使用lambda函数指定排序的关键字，按照数字排序
+    sorted_queries = sorted(queries, key=lambda x: int(x.split('query')[1].split('.sql')[0]))
+
+    print(sorted_queries)
+'''
+['query3.sql', 'query7.sql', 'query8.sql', 'query9.sql', 
+'query13.sql', 'query15.sql', 'query17.sql', 'query18.sql', 'query19.sql', 
+'query22.sql', 'query24.sql', 'query25.sql', 'query26.sql', 'query27.sql', 'query28.sql', 
+'query30.sql', 'query31.sql', 'query33.sql', 'query34.sql', 'query38.sql', 'query39.sql', 
+'query41.sql', 'query42.sql', 'query43.sql', 'query44.sql', 'query45.sql', 'query46.sql', 'query48.sql',  
+'query50.sql', 'query51.sql', 'query52.sql', 'query53.sql', 'query54.sql', 'query55.sql', 'query56.sql', 
+'query60.sql', 'query61.sql', 'query62.sql', 'query63.sql', 'query65.sql', 'query66.sql', 'query67.sql', 'query68.sql', 'query69.sql',
+ 'query71.sql', 'query72.sql', 'query73.sql', 'query75.sql', 'query76.sql', 'query79.sql', 
+ 'query81.sql', 'query83.sql', 'query84.sql', 'query85.sql', 'query87.sql', 'query88.sql', 'query89.sql', 
+ 'query90.sql', 'query91.sql', 'query91.sql', 'query93.sql', 'query96.sql', 'query97.sql', 'query99.sql']
+
+'''
 
 def run_query():
     connection = psycopg2.connect(host=host, port=port, database=database, user=user)
@@ -37,7 +68,7 @@ def run_query():
             #                 'query53.sql', 'query69.sql', 'query54.sql', 'query45.sql', 'query88.sql', 'query34.sql',
             #                 'query51.sql', 'query75.sql', 'query68.sql', 'query24.sql']:
             #     continue
-            if filename not in ['query39.sql']:
+            if filename not in ['query65.sql']:
                 continue
             print(filename)
             query_path = os.path.join(root_path, filename)
@@ -63,14 +94,14 @@ def run_query():
 
 if __name__ == '__main__':
     run_query()
-    # run_time = []
-    # number = 5;
-    # for i in range(number):
-    #     run_time.append(run_query())
-    # sum = 0
-    # for i in run_time:
-    #     print(i)
-    #     sum += i
-    # average = sum / number
-    # print("average time" + str(average))
+    run_time = []
+    number = 3
+    for i in range(number):
+        run_time.append(run_query())
+    sum = 0
+    for i in run_time:
+        print(i)
+        sum += i
+    average = sum / number
+    print("average time" + str(average))
 
