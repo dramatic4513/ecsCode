@@ -5,7 +5,8 @@ from datetime import datetime
 
 host = "172.23.52.199"
 port = 20004
-database = "tpcds39"
+# database = "tpcds39"
+database = "tpcds"
 user = "postgres"
 password = "postgres"
 

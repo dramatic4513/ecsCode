@@ -12,7 +12,6 @@ import numpy as np
 2. 合并连接对，对应频率相加
 3. 建立数据库表名 及 表大小的对应关系
 4. 对应连接的权重
-5. 
 '''
 
 host = "172.23.52.199"
@@ -115,6 +114,7 @@ def find_join_pair(file_name_list):
 
 
 def edge_weight(join_pairs_frequency):
+    five = []
     join_pairs_weight = []
     for join_pair in join_pairs_frequency:
         print(join_pair)
@@ -124,10 +124,13 @@ def edge_weight(join_pairs_frequency):
             f = join_pair[2]
             join_weigth = f * (t1 + t2)
             join_pairs_weight.append([join_pair[0], join_pair[1], join_weigth])
+            five.append([attribute_to_table(join_pair[0]), join_pair[0], attribute_to_table(join_pair[1]), join_pair[1], join_weigth])
         except TypeError as e:
             print(e)
     for join_pair in join_pairs_weight:
         print(join_pair)
+    for i in five:
+        print(i)
     return join_pairs_weight
 
 
@@ -326,6 +329,8 @@ def probability_attribute_partition(edge_weight_list):
     ans_dict = dict() #表：属性
     table_set = set() #已分配属性的表
 
+    repartition_income = 0 #重分区操作的收益，被选中的属性之和
+
     while len(edge_weight_list) > 0:
         #将边权重转化为属性权重
         attribute_weight_dict = dict()
@@ -352,6 +357,7 @@ def probability_attribute_partition(edge_weight_list):
         normalized_weights = [weight / total_weight for weight in weights_list]
         cur_attribute_weight_index = np.random.choice(len(attribute_weight_list), p=normalized_weights)
         cur_attribute = attribute_weight_list[cur_attribute_weight_index]
+        repartition_income = cur_attribute[1]
         print(cur_attribute)
 
         #为在这个属性上连接的表分配属性
@@ -382,9 +388,16 @@ def probability_attribute_partition(edge_weight_list):
         query_template = "ALTER TABLE {table} DISTRIBUTE BY HASH({column});"
         query = query_template.format(table=key, column=value)
         print(query)
+
+    repartition_cost = 0 #重分区操作的代价，需要被重分区的表大小之和
     for key, value in ans_dict.items():
         if table_primary_dict[key] != value:
+            repartition_cost += table_size(key)
             print(key + " " + table_primary_dict[key] + " -> " + value)
+
+    return repartition_income, repartition_cost
+
+
 
 
 def replication_for_PAA(table, edge_weight_list):
@@ -401,20 +414,28 @@ def replication_for_PAA(table, edge_weight_list):
     return new_list
 
 if __name__ == '__main__':
+    '''
+    1. 解析SQL语句，找到其中参与多表连接的属性和频率
+    2. 然后根据频率和表大小，计算得到连接权重，计算得到属性权重
+    3. 根据连接信息构建图并根据算法来选择边或者属性
+    4. 生成数据分区方案
+    '''
     # 根据列找表名 和 根据表名查找表大小
     # table_name = attribute_to_table("ws_net_paid_inc_ship_tax")
     # table_size_bytes = table_size(table_name)
 
     # # 边贪心算法生成分区语句
-    file_name_list = ['query60.sql', 'query61.sql', 'query62.sql', 'query63.sql', 'query65.sql', 'query66.sql', 'query67.sql', 'query68.sql', 'query69.sql']
+    # file_name_list = ['query60.sql', 'query61.sql', 'query62.sql', 'query63.sql', 'query65.sql', 'query66.sql', 'query67.sql', 'query68.sql', 'query69.sql']
+    file_name_list = ['query60.sql']
     join_pair_freduency = find_join_pair(file_name_list)
     edge_weight_list = edge_weight(join_pair_freduency)
-
-    start_time = time.time()
     gredy_edge_partition(edge_weight_list)
-    end_time = time.time()
-    esp = (end_time - start_time) * 1000
-    print(esp)
+
+    # start_time = time.time()
+    # gredy_edge_partition(edge_weight_list)
+    # end_time = time.time()
+    # esp = (end_time - start_time) * 1000
+    # print(esp)
 
     # 属性贪心算法生成分区语句
     # file_name_list = ['query41.sql', 'query42.sql', 'query43.sql', 'query44.sql', 'query45.sql', 'query46.sql', 'query48.sql']

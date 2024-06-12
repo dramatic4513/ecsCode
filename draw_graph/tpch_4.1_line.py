@@ -113,6 +113,6 @@ def alter():
 
 if __name__ == '__main__':
     # cycle()
-    # normal()
+    normal()
     # hit_ration()
-    alter()
+    # alter()

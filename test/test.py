@@ -1,3 +1,16 @@
+
+
+five_set = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+five_dict = [[0 for _ in range(len(five_set))] for _ in range(len(five_set))]
+print(five_dict)
+
+
+
+
+
+
+
+
 '''
 workload, threshold
 wight = 0, i = 0

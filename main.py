@@ -1,17 +1,15 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# y1 = [7913, 41611, 5704, 31606, 15119, 52997, 4596, 10413, 4670, 9391, 414, 7196, 9501, 7485, 1226, 812, 13030]
+# y2 = [4701, 35261, 3043, 8306, 13342, 2304, 2179, 9366, 3077, 8766, 407, 5883, 6396, 2069, 970, 775, 9803]
 
-print("Hello PyCharm and gtm")
+y1 = [ 31873, 34004, 29688, 38513,
+      31606, 33967, 23247, 23104, 6293, 341, 7948, 11449, 2589, 1029, 728]
+y2 = [9391, 8993, 8956, 9199, 9121, 8766, 8306, 8652, 5924, 601, 5968, 5779, 2501, 1442, 826]
 
-# def print_hi(name):
-#     # Use a breakpoint in the code line below to debug your script.
-#     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-# if __name__ == '__main__':
-#     print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+sum_y1 = 0
+sum_y2 = 0
+for i in range(len(y1)):
+    p = (y1[i] - y2[i])/ y1[i]
+    print(p)
+    sum_y1 += p
+print(sum_y1 / len(y1))
